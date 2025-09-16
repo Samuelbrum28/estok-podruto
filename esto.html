@@ -5,31 +5,289 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        /* style.css
+   Interface interativa e moderna
+   Com transições, animações e foco em UX
+*/
+
+/* -------------------------
+   Variáveis principais
+------------------------- */
+:root {
+  --bg: #f1f5f9;
+  --surface: #ffffff;
+  --text: #1e293b;
+  --muted: #64748b;
+  --accent: #6366f1;
+  --accent-dark: #4f46e5;
+
+  --radius: 14px;
+  --shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --shadow-hover: 0 10px 28px rgba(15, 23, 42, 0.14);
+
+  --transition: 0.25s ease;
+}
+
+/* -------------------------
+   Reset básico
+------------------------- */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* -------------------------
+   Layout
+------------------------- */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* -------------------------
+   Cabeçalho com menu
+------------------------- */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.5px;
+}
+
+.nav {
+  display: flex;
+  gap: 1.2rem;
+}
+
+.nav a {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+  position: relative;
+  transition: color var(--transition);
+}
+
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -4px;
+  width: 0%; height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width var(--transition);
+}
+
+.nav a:hover {
+  color: var(--accent);
+}
+.nav a:hover::after {
+  width: 100%;
+}
+
+/* -------------------------
+   Botões interativos
+------------------------- */
+.btn {
+  padding: 0.8rem 1.4rem;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+/* -------------------------
+   Cartões com efeito de flutuar
+------------------------- */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* -------------------------
+   Inputs e campos interativos
+------------------------- */
+input, textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius);
+  border: 1px solid #0955b9;
+  font-size: 1rem;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+}
+
+/* -------------------------
+   Animação sutil nos elementos aparecendo
+------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s var(--transition) forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+        .hidden {
+            display: none
+        }
+    </style>
 </head>
 
 <body>
 
 
     <div id="sumir">
-        <button onclick="sumir()">Cadastrar produto</button>
+        <h1>Gerenciador de Produtos</h1>
+        <button onclick="sumir()">Ir pro cadastro</button>
+
 
         <table border="1">
 
             <tr>
-                <th>Nome</th>
-                <th>preço</th>
+                <th>Nomew</th>
+                <th>Preço</th>
                 <th>Quantidade</th>
                 <th>Valor total</th>
                 <th>Ações</th>
             </tr>
-
+            <tbody id="corpo"></tbody>
 
         </table>
+        <br>
+
+    </div>
+
+    <div id="cadastro" class="hidden">
+        <h1>Cadastro de Produto</h1>
+        Nome: <input id="nome" type="nome"><br><br>
+        Preço: <input id="preco" type="Preço"><br><br>
+        Quantidade: <input id="qtd" type="Quantidade"><br><br>
+        <button onclick="Salvar()">Salvar</button>
+        <button onclick="Cancelar()">Cancelar</button>
+
+
 
 
 
 
     </div>
+
+
+    <script>
+
+        let nomes = []
+        let precos = []
+        let qtds = []
+        let total = []
+
+
+
+        function sumir() {
+
+            document.getElementById("sumir").classList.add("hidden")
+            document.getElementById("cadastro").classList.remove("hidden")
+
+
+        }
+
+        function Cancelar() {
+            document.getElementById("sumir").classList.remove("hidden")
+            document.getElementById("cadastro").classList.add("hidden")
+
+        }
+
+        function Salvar() {
+
+            let nome = document.getElementById("nome")
+            let preco = document.getElementById("preco")
+            let qtd = document.getElementById("qtd")
+
+            nomes.push(nome.value)
+            precos.push(preco.value)
+            qtds.push(qtd.value)
+
+            total.push(parseFloat(preco.value) * parseInt(qtd.value))
+
+            document.getElementById("sumir").classList.remove("hidden")
+            document.getElementById("cadastro").classList.add("hidden")
+            mostrarTabela()
+
+
+        }
+
+        function mostrarTabela() {
+            const corpo = document.getElementById('corpo')
+        corpo.innerHTML =""
+            for (let i = 0; i < nomes.length; i++) {
+                const linha = document.createElement("tr")
+                linha.innerHTML = `  
+            
+        <td>${nomes[i]}</td> 
+        <td>${precos[i]}</td> 
+        <td>${qtds[i]}</td> 
+        <td>${total[i]}</td>   
+           
+    `
+                corpo.appendChild(linha)
+            }
+
+        }
+
+
+    </script>
+
+
 
 </body>
 
